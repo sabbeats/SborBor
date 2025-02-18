@@ -1,0 +1,1 @@
+worker: python3 artist_bot.py

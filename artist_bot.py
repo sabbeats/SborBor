@@ -14,7 +14,6 @@ import asyncio
 import csv
 from io import StringIO
 
-
 # Загружаем переменные окружения
 load_dotenv()
 
@@ -25,7 +24,14 @@ SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")  # <-- СЮДА ВСТАВИМ ID �
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/spreadsheets",
          "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
 
-creds = ServiceAccountCredentials.from_json_keyfile_name("google_key.json", scope)
+import json
+from io import StringIO
+import os
+
+google_key = json.loads(os.getenv('GOOGLE_KEY'))
+google_key_file = StringIO(json.dumps(google_key))
+
+creds = ServiceAccountCredentials.from_json_keyfile_dict(google_key, scope)
 client = gspread.authorize(creds)
 
 # Инициализация бота
